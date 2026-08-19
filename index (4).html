@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Tailgate Beach Club — Daily Revenue Report</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d2239;color:#e8f1f8;font:14px/1.45 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.top{background:#122E4D;border-bottom:1px solid rgba(97,168,194,.25);padding:14px 20px}
+.wrap{max-width:1180px;margin:0 auto}
+.brand{font-size:12px;letter-spacing:.18em;color:#61A8C2;font-weight:700;text-transform:uppercase}
+h1{font-size:22px;font-weight:700;margin-top:2px}
+.stamp{font-size:11px;color:#8fb4cc;margin-top:5px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.tab{background:rgba(97,168,194,.10);border:1px solid rgba(97,168,194,.30);color:#bcd8e6;padding:7px 15px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.03em;font-family:inherit}
+.tab:hover{background:rgba(97,168,194,.20)}
+.tab.on{background:#61A8C2;border-color:#61A8C2;color:#0d2239}
+main{padding:22px 20px 60px}
+.head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.head h2{font-size:19px;font-weight:700}
+select{background:#122E4D;color:#e8f1f8;border:1px solid rgba(97,168,194,.35);border-radius:8px;padding:7px 10px;font-size:13px;font-family:inherit}
+.evs{font-size:12px;color:#8fb4cc;margin:8px 0 4px;line-height:1.6}
+.zone{border:1px solid rgba(97,168,194,.22);border-radius:14px;padding:2px 18px 18px;margin-top:18px;background:rgba(18,46,77,.35)}
+.zone.combined{background:transparent;border-style:dashed}
+.zhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:16px 0 2px}
+.zhead h3{font-size:15px;margin:0;font-weight:700;letter-spacing:-.01em}
+.chip{font-size:10px;letter-spacing:.13em;font-weight:700;text-transform:uppercase;color:#0B2036;background:#61A8C2;border-radius:999px;padding:3px 9px}
+.chip.alt{background:transparent;color:#61A8C2;border:1px solid rgba(97,168,194,.5)}
+.zshare{font-size:11px;color:#8fb4cc;font-weight:600}
+tr.zrow td{font-size:12px;color:#8fb4cc;background:rgba(11,32,54,.35)}
+tr.zrow td:first-child{padding-left:26px;font-style:italic}
+.closednote{font-size:12px;color:#ED6154;margin:8px 0 0;font-weight:600}
+.sec{font-size:11px;letter-spacing:.16em;color:#61A8C2;font-weight:700;text-transform:uppercase;margin:26px 0 10px}
+.grid{display:grid;gap:12px}
+.g5{grid-template-columns:repeat(5,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:#122E4D;border:1px solid rgba(97,168,194,.18);border-radius:12px;padding:14px 16px}
+.k{font-size:10px;letter-spacing:.13em;color:#8fb4cc;text-transform:uppercase;font-weight:700}
+.v{font-size:26px;font-weight:700;margin-top:6px;letter-spacing:-.01em}
+.v.sm{font-size:20px}
+.sub{font-size:11px;color:#8fb4cc;margin-top:4px}
+.row2{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap}
+.row2 div{min-width:70px}
+.blue{color:#61A8C2}.red{color:#ED6154}.green{color:#22C55E}
+.tw{overflow-x:auto;border:1px solid rgba(97,168,194,.18);border-radius:12px;background:#122E4D}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8fb4cc;text-align:right;padding:10px 12px;background:rgba(97,168,194,.08);font-weight:700;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td{padding:9px 12px;text-align:right;font-size:13px;border-top:1px solid rgba(97,168,194,.10);white-space:nowrap}
+tr.closed td{color:#6d90a8;font-style:italic}
+tr.istoday td{background:rgba(97,168,194,.10)}
+tfoot td{font-weight:700;background:rgba(97,168,194,.08)}
+.ev{color:#8fb4cc;font-size:11px;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.note{font-size:11px;color:#6d90a8;margin-top:22px;line-height:1.6}
+@media(max-width:980px){.g5,.g4,.g3{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
+@media(max-width:580px){.g5,.g4,.g3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+<div class="brand">Tailgate Beach Club</div>
+<h1>Daily Revenue Report</h1>
+<div class="stamp" id="stamp"></div>
+<div class="tabs" id="tabs"></div>
+</div></div>
+<main><div class="wrap" id="view"></div></main>
+<script>
+var VENUE_TZ="America/Los_Angeles";
+var DATA_AS_OF="2026-08-19";
+var GEN="Aug 19, 2026, 11:23 AM PT";
+var DAYS={"2026-08-20":{"t":{"r":8,"g":41,"v":3900,"d":540},"i":{"r":6,"g":31,"v":2900,"d":540},"h":{"r":2,"g":10,"v":1000,"d":0},"p":{"cab":{"r":2,"g":24,"v":2500,"d":500,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":2,"v":200,"d":40},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":2,"g":2,"v":0,"d":0}},"e":["FOOTBALL PRESEASON WITH SOUNDS BY OUR HOUSE DJ"],"zk":"ECZ0"},"2026-08-21":{"t":{"r":16,"g":85,"v":5325,"d":975},"i":{"r":10,"g":42,"v":2375,"d":975},"h":{"r":6,"g":43,"v":2950,"d":0},"p":{"cab":{"r":1,"g":12,"v":1500,"d":300,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":2,"g":8,"v":625,"d":625},"chr":{"r":1,"g":2,"v":50,"d":50},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":5,"g":18,"v":0,"d":0}},"e":["FOOTBALL PRESEASON WITH SOUNDS BY DJ SHRED"],"zk":"ECZ0"},"2026-08-22":{"t":{"r":43,"g":384,"v":28021,"d":4900},"i":{"r":34,"g":337,"v":23220,"d":4640},"h":{"r":9,"g":47,"v":4801,"d":260},"p":{"cab":{"r":14,"g":198,"v":16250,"d":3250,"f":2},"bun":{"r":2,"g":40,"v":4000,"d":800},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":6,"g":51,"v":2175,"d":755},"chr":{"r":1,"g":3,"v":75,"d":75},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":10,"g":27,"v":20,"d":20}},"e":["FOOTBALL PRESEASON WITH SOUNDS BY DJ SINCERE","NEON VIBRA WITH NIO GARCIA LIVE"],"z":[{"k":"ECZ0","e":["FOOTBALL PRESEASON WITH SOUNDS BY DJ SINCERE"],"t":{"r":41,"g":377,"v":27501,"d":4880},"i":{"r":33,"g":336,"v":23200,"d":4620},"h":{"r":8,"g":41,"v":4301,"d":260},"p":{"cab":{"r":14,"g":198,"v":16250,"d":3250,"f":2},"bun":{"r":2,"g":40,"v":4000,"d":800},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":6,"g":51,"v":2175,"d":755},"chr":{"r":1,"g":3,"v":75,"d":75},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":9,"g":26,"v":0,"d":0}}},{"k":"ECZ1","e":["NEON VIBRA WITH NIO GARCIA LIVE"],"t":{"r":2,"g":7,"v":520,"d":20},"i":{"r":1,"g":1,"v":20,"d":20},"h":{"r":1,"g":6,"v":500,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":1,"v":20,"d":20}}}]},"2026-08-23":{"t":{"r":9,"g":64,"v":7175,"d":2475},"i":{"r":5,"g":26,"v":2225,"d":2225},"h":{"r":4,"g":38,"v":4950,"d":250},"p":{"cab":{"r":1,"g":12,"v":1250,"d":250,"f":0},"bun":{"r":1,"g":20,"v":2000,"d":2000},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":2,"v":50,"d":50},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":3,"g":4,"v":175,"d":175}},"e":["FOOTBALL PRESEASON WITH SOUNDS BY DJ SINCERE"],"zk":"ECZ0"},"2026-08-28":{"t":{"r":21,"g":154,"v":11451,"d":3900},"i":{"r":18,"g":124,"v":10200,"d":3800},"h":{"r":3,"g":30,"v":1251,"d":100},"p":{"cab":{"r":7,"g":82,"v":5750,"d":2150,"f":2},"bun":{"r":2,"g":40,"v":4000,"d":800},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":3,"g":6,"v":150,"d":150},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":7,"g":8,"v":800,"d":800}},"e":["PRESEASON FOOTBALL WITH SOUNDS BY DJ SINCERE"],"zk":"ECZ0"},"2026-08-29":{"t":{"r":34,"g":321,"v":30825,"d":6885},"i":{"r":31,"g":301,"v":28825,"d":6785},"h":{"r":3,"g":20,"v":2000,"d":100},"p":{"cab":{"r":17,"g":205,"v":22750,"d":4550,"f":2},"bun":{"r":2,"g":40,"v":4000,"d":800},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":4,"g":33,"v":1475,"d":835},"chr":{"r":1,"g":2,"v":100,"d":100},"stg":{"r":1,"g":10,"v":500,"d":100},"ga":{"r":7,"g":23,"v":500,"d":500}},"e":["COLLEGE FOOTBALL KICKOFF"],"zk":"ECZ0"},"2026-08-30":{"t":{"r":10,"g":65,"v":4000,"d":1840},"i":{"r":9,"g":55,"v":4000,"d":1840},"h":{"r":1,"g":10,"v":0,"d":0},"p":{"cab":{"r":2,"g":24,"v":1750,"d":1350,"f":1},"bun":{"r":1,"g":20,"v":2000,"d":400},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":2,"g":4,"v":250,"d":90},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":4,"g":7,"v":0,"d":0}},"e":["POOLSIDE WITH DJ LUCKY LOU"],"zk":"ECZ0"},"2026-09-03":{"t":{"r":7,"g":6,"v":380,"d":380},"i":{"r":5,"g":6,"v":380,"d":380},"h":{"r":2,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":2,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":4,"g":4,"v":380,"d":380}},"e":["LABOR DAY WEEKEND THURSDAY POOLSIDE"],"zk":"ECZ0"},"2026-09-04":{"t":{"r":4,"g":13,"v":1425,"d":625},"i":{"r":4,"g":13,"v":1425,"d":625},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":1,"g":7,"v":1000,"d":200,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":3,"g":6,"v":425,"d":425}},"e":["LABOR DAY WEEKEND FRIDAY POOLSIDE"],"zk":"ECZ0"},"2026-09-05":{"t":{"r":65,"g":323,"v":32350,"d":7150},"i":{"r":60,"g":281,"v":25850,"d":6550},"h":{"r":5,"g":42,"v":6500,"d":600},"p":{"cab":{"r":8,"g":94,"v":13000,"d":2600,"f":0},"bun":{"r":1,"g":20,"v":3000,"d":600},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":19,"g":134,"v":12125,"d":3225},"chr":{"r":1,"g":2,"v":50,"d":50},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":33,"g":55,"v":675,"d":675}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB","THE R&B TOUR USHER & BROWN OFFICIAL AFTERPARTY"],"z":[{"k":"ECZ0","e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"t":{"r":21,"g":159,"v":19175,"d":3975},"i":{"r":17,"g":129,"v":14175,"d":3675},"h":{"r":4,"g":30,"v":5000,"d":300},"p":{"cab":{"r":5,"g":58,"v":8500,"d":1700,"f":0},"bun":{"r":1,"g":20,"v":3000,"d":600},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":7,"g":49,"v":4125,"d":1625},"chr":{"r":1,"g":2,"v":50,"d":50},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":4,"g":12,"v":0,"d":0}}},{"k":"ECZ1","e":["THE R&B TOUR USHER & BROWN OFFICIAL AFTERPARTY"],"t":{"r":44,"g":164,"v":13175,"d":3175},"i":{"r":43,"g":152,"v":11675,"d":2875},"h":{"r":1,"g":12,"v":1500,"d":300},"p":{"cab":{"r":3,"g":36,"v":4500,"d":900,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":12,"g":85,"v":8000,"d":1600},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":29,"g":43,"v":675,"d":675}}}]},"2026-09-06":{"t":{"r":103,"g":302,"v":20680,"d":4040},"i":{"r":98,"g":238,"v":10680,"d":3640},"h":{"r":5,"g":64,"v":10000,"d":400},"p":{"cab":{"r":7,"g":84,"v":9500,"d":1600,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":3,"g":26,"v":1500,"d":300},"chr":{"r":4,"g":14,"v":1950,"d":910},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":85,"g":130,"v":1230,"d":1230}},"e":["WAKA FLOCKA PERFORMING LIVE WITH COLLEGE FOOTBALL GAME DAY","LEVERAGE PRESENTS SIMP CITY WITH MARIO"],"z":[{"k":"ECZ0","e":["WAKA FLOCKA PERFORMING LIVE WITH COLLEGE FOOTBALL GAME DAY"],"t":{"r":36,"g":231,"v":20650,"d":4010},"i":{"r":31,"g":167,"v":10650,"d":3610},"h":{"r":5,"g":64,"v":10000,"d":400},"p":{"cab":{"r":7,"g":84,"v":9500,"d":1600,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":3,"g":26,"v":1500,"d":300},"chr":{"r":4,"g":14,"v":1950,"d":910},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":18,"g":59,"v":1200,"d":1200}}},{"k":"ECZ1","e":["LEVERAGE PRESENTS SIMP CITY WITH MARIO"],"t":{"r":67,"g":71,"v":30,"d":30},"i":{"r":67,"g":71,"v":30,"d":30},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":67,"g":71,"v":30,"d":30}}}]},"2026-09-09":{"t":{"r":7,"g":33,"v":1975,"d":1655},"i":{"r":6,"g":25,"v":1975,"d":1655},"h":{"r":1,"g":8,"v":0,"d":0},"p":{"cab":{"r":1,"g":12,"v":1500,"d":1500,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":1,"g":6,"v":400,"d":80},"chr":{"r":2,"g":3,"v":75,"d":75},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":2,"g":4,"v":0,"d":0}},"e":["FOOTBALL KICKOFF | SEATTLE VS. NEW ENGLAND"],"zk":"ECZ0"},"2026-09-10":{"t":{"r":6,"g":22,"v":350,"d":70},"i":{"r":6,"g":22,"v":350,"d":70},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":1,"g":5,"v":250,"d":50},"chr":{"r":2,"g":4,"v":100,"d":20},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":3,"g":13,"v":0,"d":0}},"e":["POOLSIDE THURSDAY AT TAILGATE BEACH CLUB","THURSDAY NIGHT LIGHTS | SAN FRANCISCO VS. LOS ANGELES"],"z":[{"k":"ECZ0","e":["POOLSIDE THURSDAY AT TAILGATE BEACH CLUB"],"t":{"r":1,"g":3,"v":0,"d":0},"i":{"r":1,"g":3,"v":0,"d":0},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":3,"v":0,"d":0}}},{"k":"ECZ1","e":["THURSDAY NIGHT LIGHTS | SAN FRANCISCO VS. LOS ANGELES"],"t":{"r":5,"g":19,"v":350,"d":70},"i":{"r":5,"g":19,"v":350,"d":70},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":1,"g":5,"v":250,"d":50},"chr":{"r":2,"g":4,"v":100,"d":20},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":2,"g":10,"v":0,"d":0}}}]},"2026-09-11":{"t":{"r":2,"g":5,"v":25,"d":25},"i":{"r":2,"g":5,"v":25,"d":25},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":1,"v":25,"d":25},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":4,"v":0,"d":0}},"e":["POOLSIDE FRIDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-12":{"t":{"r":32,"g":176,"v":14651,"d":3190},"i":{"r":28,"g":149,"v":12400,"d":3020},"h":{"r":4,"g":27,"v":2251,"d":170},"p":{"cab":{"r":6,"g":72,"v":8000,"d":1400,"f":0},"bun":{"r":1,"g":20,"v":2000,"d":400},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":6,"g":51,"v":3575,"d":715},"chr":{"r":2,"g":4,"v":300,"d":300},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":15,"g":24,"v":375,"d":375}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-13":{"t":{"r":52,"g":273,"v":24730,"d":6020},"i":{"r":46,"g":233,"v":20330,"d":5730},"h":{"r":6,"g":40,"v":4400,"d":290},"p":{"cab":{"r":11,"g":132,"v":16500,"d":2940,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":8,"g":56,"v":4200,"d":1240},"chr":{"r":6,"g":13,"v":1200,"d":960},"stg":{"r":1,"g":10,"v":1000,"d":200},"ga":{"r":23,"g":52,"v":680,"d":680}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-14":{"t":{"r":1,"g":2,"v":50,"d":50},"i":{"r":1,"g":2,"v":50,"d":50},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":2,"v":50,"d":50},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["MONDAY POOLSIDE AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-17":{"t":{"r":1,"g":3,"v":0,"d":0},"i":{"r":1,"g":3,"v":0,"d":0},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":3,"v":0,"d":0}},"e":["THURSDAY NIGHT LIGHTS | DETROIT VS. BUFFALO"],"zk":"ECZ1"},"2026-09-18":{"t":{"r":1,"g":12,"v":500,"d":100},"i":{"r":0,"g":0,"v":0,"d":0},"h":{"r":1,"g":12,"v":500,"d":100},"p":{"cab":{"r":1,"g":12,"v":500,"d":100,"f":1},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["POOLSIDE FRIDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-19":{"t":{"r":4,"g":28,"v":3200,"d":800},"i":{"r":4,"g":28,"v":3200,"d":800},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":2,"g":24,"v":3000,"d":600,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":2,"v":200,"d":200},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":2,"v":0,"d":0}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-20":{"t":{"r":17,"g":111,"v":12225,"d":2825},"i":{"r":15,"g":79,"v":8725,"d":2125},"h":{"r":2,"g":32,"v":3500,"d":700},"p":{"cab":{"r":4,"g":33,"v":5500,"d":1100,"f":0},"bun":{"r":2,"g":40,"v":4500,"d":900},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":3,"g":22,"v":1550,"d":310},"chr":{"r":4,"g":8,"v":500,"d":340},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":4,"g":8,"v":175,"d":175}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-21":{"t":{"r":1,"g":2,"v":0,"d":0},"i":{"r":1,"g":2,"v":0,"d":0},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":2,"v":0,"d":0}},"e":["POOLSIDE MONDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-24":{"t":{"r":1,"g":7,"v":665,"d":665},"i":{"r":1,"g":7,"v":665,"d":665},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":7,"v":665,"d":665}},"e":["POOLSIDE THURSDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-26":{"t":{"r":10,"g":87,"v":16125,"d":1115},"i":{"r":8,"g":57,"v":8625,"d":615},"h":{"r":2,"g":30,"v":7500,"d":500},"p":{"cab":{"r":1,"g":12,"v":1500,"d":300,"f":0},"bun":{"r":1,"g":20,"v":2500,"d":500},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":2,"g":9,"v":1325,"d":265},"chr":{"r":1,"g":2,"v":50,"d":50},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":2,"g":4,"v":0,"d":0}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-27":{"t":{"r":17,"g":84,"v":10800,"d":2190},"i":{"r":17,"g":84,"v":10800,"d":2190},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":4,"g":49,"v":9000,"d":1800,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":2,"g":15,"v":825,"d":165},"chr":{"r":4,"g":9,"v":225,"d":225},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":6,"g":11,"v":0,"d":0}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-09-28":{"t":{"r":2,"g":3,"v":75,"d":75},"i":{"r":2,"g":3,"v":75,"d":75},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":2,"g":3,"v":75,"d":75},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["POOLSIDE MONDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-01":{"t":{"r":1,"g":2,"v":0,"d":0},"i":{"r":1,"g":2,"v":0,"d":0},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":2,"v":0,"d":0}},"e":["POOLSIDE THURSDAYS AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-03":{"t":{"r":8,"g":32,"v":3925,"d":3765},"i":{"r":8,"g":32,"v":3925,"d":3765},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":1,"g":20,"v":3000,"d":3000},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":5,"g":10,"v":750,"d":590},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":2,"g":2,"v":175,"d":175}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-04":{"t":{"r":17,"g":70,"v":7650,"d":2270},"i":{"r":17,"g":70,"v":7650,"d":2270},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":2,"g":24,"v":5500,"d":1100,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":3,"g":21,"v":1225,"d":245},"chr":{"r":5,"g":12,"v":750,"d":750},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":7,"g":13,"v":175,"d":175}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-10":{"t":{"r":3,"g":36,"v":5000,"d":1000},"i":{"r":1,"g":4,"v":0,"d":0},"h":{"r":2,"g":32,"v":5000,"d":1000},"p":{"cab":{"r":1,"g":12,"v":1500,"d":300,"f":0},"bun":{"r":1,"g":20,"v":3500,"d":700},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":4,"v":0,"d":0}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-11":{"t":{"r":4,"g":32,"v":2450,"d":530},"i":{"r":4,"g":32,"v":2450,"d":530},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":2,"g":24,"v":2000,"d":400,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":1,"g":6,"v":400,"d":80},"chr":{"r":1,"g":2,"v":50,"d":50},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-17":{"t":{"r":3,"g":34,"v":2500,"d":500},"i":{"r":3,"g":34,"v":2500,"d":500},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":2,"g":24,"v":2000,"d":400,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":1,"g":10,"v":500,"d":100},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-18":{"t":{"r":5,"g":24,"v":2025,"d":405},"i":{"r":4,"g":12,"v":525,"d":105},"h":{"r":1,"g":12,"v":1500,"d":300},"p":{"cab":{"r":1,"g":12,"v":1500,"d":300,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":1,"g":5,"v":325,"d":65},"chr":{"r":1,"g":2,"v":200,"d":40},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":2,"g":5,"v":0,"d":0}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-23":{"t":{"r":1,"g":1,"v":0,"d":0},"i":{"r":1,"g":1,"v":0,"d":0},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":1,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["POOLSIDE FRIDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-24":{"t":{"r":4,"g":28,"v":1900,"d":380},"i":{"r":4,"g":28,"v":1900,"d":380},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":1,"g":12,"v":1000,"d":200,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":2,"g":12,"v":900,"d":180},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":4,"v":0,"d":0}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-10-26":{"t":{"r":1,"g":5,"v":0,"d":0},"i":{"r":1,"g":5,"v":0,"d":0},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":5,"v":0,"d":0}},"e":["MONDAY NIGHT BLITZ | DALLAS VS. PHILADELPHIA"],"zk":"ECZ0"},"2026-10-29":{"t":{"r":1,"g":5,"v":0,"d":0},"i":{"r":1,"g":5,"v":0,"d":0},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":5,"v":0,"d":0}},"e":["THURSDAY NIGHT LIGHTS | CAROLINA VS. GREEN BAY"],"zk":"ECZ1"},"2026-10-31":{"t":{"r":3,"g":7,"v":25,"d":25},"i":{"r":3,"g":7,"v":25,"d":25},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":1,"v":25,"d":25},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":2,"g":6,"v":0,"d":0}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-11-01":{"t":{"r":1,"g":5,"v":0,"d":0},"i":{"r":1,"g":5,"v":0,"d":0},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":1,"g":5,"v":0,"d":0}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-11-14":{"t":{"r":1,"g":2,"v":50,"d":50},"i":{"r":1,"g":2,"v":50,"d":50},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":2,"v":50,"d":50},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-11-15":{"t":{"r":1,"g":2,"v":100,"d":100},"i":{"r":1,"g":2,"v":100,"d":100},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":1,"g":2,"v":100,"d":100},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-11-28":{"t":{"r":1,"g":20,"v":2500,"d":500},"i":{"r":0,"g":0,"v":0,"d":0},"h":{"r":1,"g":20,"v":2500,"d":500},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":1,"g":20,"v":2500,"d":500},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["COLLEGE FOOTBALL SATURDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-11-29":{"t":{"r":1,"g":6,"v":400,"d":80},"i":{"r":1,"g":6,"v":400,"d":80},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":0,"g":0,"v":0,"d":0},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":1,"g":6,"v":400,"d":80},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["REDZONE SUNDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"},"2026-12-04":{"t":{"r":1,"g":20,"v":2000,"d":10},"i":{"r":1,"g":20,"v":2000,"d":10},"h":{"r":0,"g":0,"v":0,"d":0},"p":{"cab":{"r":0,"g":0,"v":0,"d":0,"f":0},"bun":{"r":1,"g":20,"v":2000,"d":10},"dbd":{"r":0,"g":0,"v":0,"d":0},"cch":{"r":0,"g":0,"v":0,"d":0},"chr":{"r":0,"g":0,"v":0,"d":0},"stg":{"r":0,"g":0,"v":0,"d":0},"ga":{"r":0,"g":0,"v":0,"d":0}},"e":["POOLSIDE FRIDAY AT TAILGATE BEACH CLUB"],"zk":"ECZ0"}};
+var PK=['cab','bun','dbd','cch','chr','stg','ga'];
+var PLBL={cab:'VIP CABANAS',bun:'BUNGALOWS',dbd:'DAYBEDS',cch:'VIP COUCHES',chr:'LOUNGE CHAIRS',stg:'STAGE TABLES',ga:'GENERAL ADMISSION'};
+var PROW={cab:'VIP Cabanas',bun:'Bungalows',dbd:'Daybeds',cch:'VIP Couches',chr:'Lounge Chairs',stg:'Stage Tables',ga:'General Admission'};
+var KEYS=Object.keys(DAYS).sort();
+var TABS=[['day','Day'],['n7','Next 7 Days'],['n30','Next 30 Days'],['wtd','WTD'],['mtd','MTD']];
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function n(x){return Math.round(x||0).toLocaleString('en-US');}
+function m(x){return '$'+Math.round(x||0).toLocaleString('en-US');}
+function mkD(s){return new Date(s+'T12:00:00');}
+function isoOf(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function addD(s,k){var d=mkD(s);d.setDate(d.getDate()+k);return isoOf(d);}
+function vegasToday(){try{return isoOf(new Date(new Date().toLocaleString('en-US',{timeZone:VENUE_TZ})));}catch(e){return isoOf(new Date());}}
+var TODAY=vegasToday();
+function nextOpen(from){for(var i=0;i<KEYS.length;i++){if(KEYS[i]>=from)return KEYS[i];}return null;}
+function prevOpen(from){for(var i=KEYS.length-1;i>=0;i--){if(KEYS[i]<=from)return KEYS[i];}return null;}
+function pickDate(){if(DAYS[TODAY])return TODAY;return nextOpen(TODAY)||prevOpen(TODAY)||KEYS[0];}
+var STATE={view:'day',date:pickDate()};
+function longD(s){return mkD(s).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});}
+function shortD(s){return mkD(s).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
+function midD(s){return mkD(s).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function seg(){return {r:0,g:0,v:0,d:0};}
+function splitZones(k,d){return !!(d&&d.z&&d.z.length>1&&mkD(k).getDay()!==4);}
+function addSeg(a,b){if(!b)return;a.r+=b.r||0;a.g+=b.g||0;a.v+=b.v||0;a.d+=b.d||0;}
+function agg(from,to){
+ var out={t:seg(),i:seg(),h:seg(),p:{},dates:[],open:0};
+ PK.forEach(function(k){out.p[k]=seg();out.p[k].f=0;});
+ for(var s=from;s<=to;s=addD(s,1)){
+  var d=DAYS[s];out.dates.push({date:s,d:d||null});
+  if(!d)continue; out.open++;
+  addSeg(out.t,d.t);addSeg(out.i,d.i);addSeg(out.h,d.h);
+  PK.forEach(function(k){addSeg(out.p[k],d.p[k]);});
+  out.p.cab.f+=((d.p.cab||{}).f||0);
+ }
+ return out;
+}
+function range(kind){
+ if(kind==='n7')return [TODAY,addD(TODAY,6)];
+ if(kind==='n30')return [TODAY,addD(TODAY,29)];
+ if(kind==='mtd')return [TODAY.slice(0,8)+'01',TODAY];
+ var dow=mkD(TODAY).getDay();
+ if(dow===1)return [addD(TODAY,-6),TODAY];
+ var back=(dow===0?6:dow-1);
+ return [addD(TODAY,-back),TODAY];
+}
+function tile(label,val,sub,cls){return '<div class="card"><div class="k">'+esc(label)+'</div><div class="v '+(cls||'')+'">'+val+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
+function srcCard(title,s,tot,cls){
+ var pct=tot&&tot.v?Math.round(s.v/tot.v*100):0;
+ return '<div class="card"><div class="k">'+esc(title)+'</div><div class="v sm '+cls+'">'+m(s.v)+'</div><div class="sub">'+pct+'% of revenue</div>'+
+  '<div class="row2"><div><div class="k">Res</div><div style="font-weight:700;margin-top:3px">'+n(s.r)+'</div></div>'+
+  '<div><div class="k">Guests</div><div style="font-weight:700;margin-top:3px">'+n(s.g)+'</div></div>'+
+  '<div><div class="k">Deposited</div><div style="font-weight:700;margin-top:3px">'+m(s.d)+'</div></div></div></div>';
+}
+function blockBody(d,tot){
+ var h='';
+ h+='<div class="sec">Totals</div><div class="grid g4">'+tile('Reservations',n(d.t.r))+tile('Guests',n(d.t.g))+tile('Revenue',m(d.t.v),null,'blue')+tile('Deposited',m(d.t.d),Math.round((d.t.d/(d.t.v||1))*100)+'% of revenue','green')+'</div>';
+ h+='<div class="sec">Revenue by Source</div><div class="grid g2">'+srcCard('In House / Digital',d.i,d.t,'blue')+srcCard('Host / Promoter',d.h,d.t,'red')+'</div>';
+ h+='<div class="sec">Product Breakdown</div><div class="grid g3">';
+ PK.forEach(function(k){var p=d.p[k]||seg();
+  var sub=n(p.g)+' guests &nbsp;&bull;&nbsp; '+m(p.v);
+  if(k==='cab'&&p.f)sub+='<br>'+n(p.f)+' @ $500 min';
+  h+=tile(PLBL[k],n(p.r)+'<span style="font-size:13px;color:#8fb4cc;font-weight:600"> bkgs</span>',sub);});
+ h+='</div>';
+ return h;
+}
+function renderDay(){
+ var s=STATE.date,d=DAYS[s],h='';
+ var opts=KEYS.slice().reverse().map(function(k){return '<option value="'+k+'"'+(k===s?' selected':'')+'>'+esc(shortD(k))+(k===TODAY?'  (today)':'')+'</option>';}).join('');
+ h+='<div class="head"><h2>'+esc(longD(s))+'</h2><select id="daysel">'+opts+'</select></div>';
+ if(!DAYS[TODAY]&&s>TODAY)h+='<div class="closednote">Closed today ('+esc(shortD(TODAY))+') &mdash; showing the next open date.</div>';
+ if(!DAYS[TODAY]&&s<TODAY)h+='<div class="closednote">Closed today ('+esc(shortD(TODAY))+') and no upcoming open dates in this snapshot &mdash; showing the most recent open date.</div>';
+ if(!d){h+='<div class="evs">No bookings on this date &mdash; venue closed.</div>';return h;}
+ h+='<div class="evs">'+(d.e.length?d.e.map(esc).join(' &nbsp;&bull;&nbsp; '):'No event listed')+(d.zk?' &nbsp;&bull;&nbsp; '+esc(d.zk):'')+'</div>';
+ if(splitZones(s,d)){
+  h+='<div class="zhead"><h3>Whole Day</h3><span class="chip alt">'+d.z.length+' ecozones</span></div>';
+  h+='<div class="zone combined">'+blockBody(d)+'</div>';
+  d.z.forEach(function(z){
+   var pct=d.t.v?Math.round(z.t.v/d.t.v*100):0;
+   h+='<div class="zhead"><h3>'+(z.e.length?z.e.map(esc).join(' / '):'No event listed')+'</h3><span class="chip">'+esc(z.k)+'</span><span class="zshare">'+pct+'% of day revenue</span></div>';
+   h+='<div class="zone">'+blockBody(z)+'</div>';
+  });
+  return h;
+ }
+ h+=blockBody(d);
+ return h;
+}
+function prodTable(A){
+ var h='<div class="tw"><table><thead><tr><th>Product</th><th>Bookings</th><th>Guests</th><th>Revenue</th><th>Deposited</th><th>Avg / Bkg</th></tr></thead><tbody>';
+ PK.forEach(function(k){var p=A.p[k];
+  h+='<tr><td>'+PROW[k]+(k==='cab'&&p.f?' <span style="color:#8fb4cc;font-size:11px">('+n(p.f)+' @ $500 min)</span>':'')+'</td><td>'+n(p.r)+'</td><td>'+n(p.g)+'</td><td>'+m(p.v)+'</td><td>'+m(p.d)+'</td><td>'+(p.r?m(p.v/p.r):'&mdash;')+'</td></tr>';});
+ h+='</tbody></table></div>';
+ return h;
+}
+function dayTable(A){
+ var h='<div class="tw"><table><thead><tr><th>Date</th><th>Event</th><th>Res</th><th>Guests</th><th>Revenue</th><th>Deposited</th></tr></thead><tbody>';
+ A.dates.forEach(function(x){
+  var cls=(x.date===TODAY?' istoday':'');
+  var lab=esc(shortD(x.date))+(x.date===TODAY?' <span style="color:#61A8C2;font-size:10px;letter-spacing:.1em">TODAY</span>':'');
+  if(!x.d){h+='<tr class="closed'+cls+'"><td>'+lab+'</td><td colspan="5">Closed</td></tr>';return;}
+  h+='<tr class="'+cls.trim()+'"><td>'+lab+'</td><td class="ev">'+(x.d.e.length?esc(x.d.e[0])+(x.d.e.length>1?' <span style="color:#8fb4cc">+'+(x.d.e.length-1)+' more</span>':''):'&mdash;')+'</td><td>'+n(x.d.t.r)+'</td><td>'+n(x.d.t.g)+'</td><td>'+m(x.d.t.v)+'</td><td>'+m(x.d.t.d)+'</td></tr>';
+  if(splitZones(x.date,x.d)){x.d.z.forEach(function(z){
+   h+='<tr class="zrow"><td>'+esc(z.k)+'</td><td class="ev">'+(z.e.length?esc(z.e.join(' / ')):'&mdash;')+'</td><td>'+n(z.t.r)+'</td><td>'+n(z.t.g)+'</td><td>'+m(z.t.v)+'</td><td>'+m(z.t.d)+'</td></tr>';});}
+ });
+ h+='</tbody><tfoot><tr><td>Total</td><td>'+A.open+(A.open===1?' open day':' open days')+'</td><td>'+n(A.t.r)+'</td><td>'+n(A.t.g)+'</td><td>'+m(A.t.v)+'</td><td>'+m(A.t.d)+'</td></tr></tfoot></table></div>';
+ return h;
+}
+function renderPeriod(kind){
+ var r=range(kind),A=agg(r[0],r[1]),h='';
+ var lbl={n7:'Next 7 Days',n30:'Next 30 Days',wtd:'Week to Date',mtd:'Month to Date'}[kind];
+ h+='<div class="head"><h2>'+lbl+'</h2><div class="sub" style="margin:0">'+esc(midD(r[0]))+' &ndash; '+esc(midD(r[1]))+'</div></div>';
+ h+='<div class="sec">Totals</div><div class="grid g5">'+tile('Reservations',n(A.t.r))+tile('Guests',n(A.t.g))+tile('Revenue',m(A.t.v),null,'blue')+tile('Deposited',m(A.t.d),Math.round((A.t.d/(A.t.v||1))*100)+'% of revenue','green')+tile('Avg / Res',A.t.r?m(A.t.v/A.t.r):'&mdash;')+'</div>';
+ h+='<div class="sec">Revenue by Source</div><div class="grid g2">'+srcCard('In House / Digital',A.i,A.t,'blue')+srcCard('Host / Promoter',A.h,A.t,'red')+'</div>';
+ h+='<div class="sec">Product Breakdown</div>'+prodTable(A);
+ h+='<div class="sec">Daily Detail</div>'+dayTable(A);
+ return h;
+}
+function render(){
+ document.getElementById('tabs').innerHTML=TABS.map(function(t){return '<button class="tab'+(STATE.view===t[0]?' on':'')+'" data-v="'+t[0]+'">'+t[1]+'</button>';}).join('');
+ Array.prototype.forEach.call(document.querySelectorAll('#tabs .tab'),function(b){b.addEventListener('click',function(){STATE.view=b.getAttribute('data-v');render();window.scrollTo(0,0);});});
+ document.getElementById('view').innerHTML=(STATE.view==='day'?renderDay():renderPeriod(STATE.view))+'<div class="note">Source: UrVenue booking details for Tailgate Beach Club. Host / Promoter = bookings created by James Scott, Jose Gonzalez or Bryce Olson; all other bookings are In House / Digital. Bookings with no product type are included in totals but not in the product breakdown. Dates with no bookings are shown as Closed. Days running more than one ecozone are broken out separately below the whole-day figures; ecozone sub-totals sum to the day total. Thursdays are always reported as a single combined day.</div>';
+ var ds=document.getElementById('daysel');
+ if(ds)ds.addEventListener('change',function(){STATE.date=ds.value;render();});
+}
+function stamp(){
+ var gap=Math.round((mkD(TODAY)-mkD(DATA_AS_OF))/86400000);
+ var s='Data through '+longD(DATA_AS_OF)+'  \u2022  last updated '+GEN;
+ if(gap>0)s+='  \u2022  <span style="color:#ED6154;font-weight:600">snapshot is '+gap+' day'+(gap===1?'':'s')+' old</span>';
+ document.getElementById('stamp').innerHTML=s;
+}
+stamp();
+render();
+</script>
+</body>
+</html>
