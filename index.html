@@ -73,6 +73,7 @@ var DAYS={"2026-08-20":{"t":{"r":13,"g":63,"v":3950,"d":590},"i":{"r":10,"g":36,
 var PK=['cab','bun','dbd','cch','chr','stg','pkg','ga'];
 var PLBL={cab:'VIP CABANAS',bun:'BUNGALOWS',dbd:'DAYBEDS',cch:'VIP COUCHES',chr:'LOUNGE CHAIRS',stg:'STAGE TABLES',pkg:'PACKAGES',ga:'GENERAL ADMISSION'};
 var PROW={cab:'VIP Cabanas',bun:'Bungalows',dbd:'Daybeds',cch:'VIP Couches',chr:'Lounge Chairs',stg:'Stage Tables',pkg:'Packages',ga:'General Admission'};
+var PKGFROM="2026-09-05";var PCTX="";function pkeys(){return PK.filter(function(k){return k!=='pkg'||PCTX>=PKGFROM;});}
 var KEYS=Object.keys(DAYS).sort();
 var TABS=[['day','Day'],['n7','Next 7 Days'],['n30','Next 30 Days'],['wtd','WTD'],['mtd','MTD']];
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -127,7 +128,7 @@ function blockBody(d,tot){
  h+='<div class="sec">Totals</div><div class="grid g4">'+tile('Reservations',n(d.t.r))+tile('Guests',n(d.t.g))+tile('Revenue',m(d.t.v),null,'blue')+tile('Deposited',m(d.t.d),Math.round((d.t.d/(d.t.v||1))*100)+'% of revenue','green')+'</div>';
  h+='<div class="sec">Revenue by Source</div><div class="grid g2">'+srcCard('In House / Digital',d.i,d.t,'blue')+srcCard('Host / Promoter',d.h,d.t,'red')+'</div>';
  h+='<div class="sec">Product Breakdown</div><div class="grid g3">';
- PK.forEach(function(k){var p=d.p[k]||seg();
+ pkeys().forEach(function(k){var p=d.p[k]||seg();
   var sub=n(p.g)+' guests &nbsp;&bull;&nbsp; '+m(p.v);
   if(k==='cab'&&p.f)sub+='<br>'+n(p.f)+' @ $500 min';
   h+=tile(PLBL[k],n(p.r)+'<span style="font-size:13px;color:#8fb4cc;font-weight:600"> bkgs</span>',sub);});
@@ -135,7 +136,7 @@ function blockBody(d,tot){
  return h;
 }
 function renderDay(){
- var s=STATE.date,d=DAYS[s],h='';
+ var s=STATE.date,d=DAYS[s],h='';PCTX=s;
  var opts=KEYS.slice().reverse().map(function(k){return '<option value="'+k+'"'+(k===s?' selected':'')+'>'+esc(shortD(k))+(k===TODAY?'  (today)':'')+'</option>';}).join('');
  h+='<div class="head"><h2>'+esc(longD(s))+'</h2><select id="daysel">'+opts+'</select></div>';
  if(!DAYS[TODAY]&&s>TODAY)h+='<div class="closednote">Closed today ('+esc(shortD(TODAY))+') &mdash; showing the next open date.</div>';
@@ -157,7 +158,7 @@ function renderDay(){
 }
 function prodTable(A){
  var h='<div class="tw"><table><thead><tr><th>Product</th><th>Bookings</th><th>Guests</th><th>Revenue</th><th>Deposited</th><th>Avg / Bkg</th></tr></thead><tbody>';
- PK.forEach(function(k){var p=A.p[k];
+ pkeys().forEach(function(k){var p=A.p[k];
   h+='<tr><td>'+PROW[k]+(k==='cab'&&p.f?' <span style="color:#8fb4cc;font-size:11px">('+n(p.f)+' @ $500 min)</span>':'')+'</td><td>'+n(p.r)+'</td><td>'+n(p.g)+'</td><td>'+m(p.v)+'</td><td>'+m(p.d)+'</td><td>'+(p.r?m(p.v/p.r):'&mdash;')+'</td></tr>';});
  h+='</tbody></table></div>';
  return h;
@@ -176,7 +177,7 @@ function dayTable(A){
  return h;
 }
 function renderPeriod(kind){
- var r=range(kind),A=agg(r[0],r[1]),h='';
+ var r=range(kind),A=agg(r[0],r[1]),h='';PCTX=r[1];
  var lbl={n7:'Next 7 Days',n30:'Next 30 Days',wtd:'Week to Date',mtd:'Month to Date'}[kind];
  h+='<div class="head"><h2>'+lbl+'</h2><div class="sub" style="margin:0">'+esc(midD(r[0]))+' &ndash; '+esc(midD(r[1]))+'</div></div>';
  h+='<div class="sec">Totals</div><div class="grid g5">'+tile('Reservations',n(A.t.r))+tile('Guests',n(A.t.g))+tile('Revenue',m(A.t.v),null,'blue')+tile('Deposited',m(A.t.d),Math.round((A.t.d/(A.t.v||1))*100)+'% of revenue','green')+tile('Avg / Res',A.t.r?m(A.t.v/A.t.r):'&mdash;')+'</div>';
