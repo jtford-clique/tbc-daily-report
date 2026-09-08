@@ -75,7 +75,8 @@ var PLBL={cab:'VIP CABANAS',bun:'BUNGALOWS',dbd:'DAYBEDS',cch:'VIP COUCHES',chr:
 var PROW={cab:'VIP Cabanas',bun:'Bungalows',dbd:'Daybeds',cch:'VIP Couches',chr:'Lounge Chairs',stg:'Stage Tables',pkg:'Packages',ga:'General Admission'};
 var PKGFROM="2026-09-05";var PCTX="";function pkeys(){return PK.filter(function(k){return k!=='pkg'||PCTX>=PKGFROM;});}
 var SIGNUP_ZONE="ECZ1";var SIGNUPS={"2026-09-11":220};
-function signupSec(k,zk){var v=SIGNUPS[k];if(v==null||zk!==SIGNUP_ZONE)return '';return '<div class="sec">Class Sign Ups</div><div class="grid g4">'+tile('Sign Ups',n(v))+'</div>';}
+function signupSec(k){var v=SIGNUPS[k];if(v==null)return '';return '<div class="sec">Class Sign Ups</div><div class="grid g4">'+tile('Sign Ups',n(v))+'</div>';}
+function signupZone(k,zk){return zk===SIGNUP_ZONE?signupSec(k):'';}
 var KEYS=Object.keys(DAYS).sort();
 var TABS=[['day','Day'],['n7','Next 7 Days'],['n30','Next 30 Days'],['wtd','WTD'],['mtd','MTD']];
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -148,15 +149,15 @@ function renderDay(){
  h+='<div class="evs">'+(d.e.length?d.e.map(esc).join(' &nbsp;&bull;&nbsp; '):'No event listed')+(d.zk?' &nbsp;&bull;&nbsp; '+esc(d.zk):'')+'</div>';
  if(splitZones(s,d)){
   h+='<div class="zhead"><h3>Whole Day</h3><span class="chip alt">'+d.z.length+' ecozones</span></div>';
-  h+='<div class="zone combined">'+blockBody(d)+'</div>';
+  h+='<div class="zone combined">'+blockBody(d,null,signupSec(s))+'</div>';
   d.z.forEach(function(z){
    var pct=d.t.v?Math.round(z.t.v/d.t.v*100):0;
    h+='<div class="zhead"><h3>'+(z.e.length?z.e.map(esc).join(' / '):'No event listed')+'</h3><span class="chip">'+esc(z.k)+'</span><span class="zshare">'+pct+'% of day revenue</span></div>';
-   h+='<div class="zone">'+blockBody(z,null,signupSec(s,z.k))+'</div>';
+   h+='<div class="zone">'+blockBody(z,null,signupZone(s,z.k))+'</div>';
   });
   return h;
  }
- h+=blockBody(d);
+ h+=blockBody(d,null,signupSec(s));
  return h;
 }
 function prodTable(A){
