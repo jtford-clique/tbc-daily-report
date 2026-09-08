@@ -74,6 +74,8 @@ var PK=['cab','bun','dbd','cch','chr','stg','pkg','ga'];
 var PLBL={cab:'VIP CABANAS',bun:'BUNGALOWS',dbd:'DAYBEDS',cch:'VIP COUCHES',chr:'LOUNGE CHAIRS',stg:'STAGE TABLES',pkg:'PACKAGES',ga:'GENERAL ADMISSION'};
 var PROW={cab:'VIP Cabanas',bun:'Bungalows',dbd:'Daybeds',cch:'VIP Couches',chr:'Lounge Chairs',stg:'Stage Tables',pkg:'Packages',ga:'General Admission'};
 var PKGFROM="2026-09-05";var PCTX="";function pkeys(){return PK.filter(function(k){return k!=='pkg'||PCTX>=PKGFROM;});}
+var SIGNUP_ZONE="ECZ1";var SIGNUPS={"2026-09-11":220};
+function signupSec(k,zk){var v=SIGNUPS[k];if(v==null||zk!==SIGNUP_ZONE)return '';return '<div class="sec">Class Sign Ups</div><div class="grid g4">'+tile('Sign Ups',n(v))+'</div>';}
 var KEYS=Object.keys(DAYS).sort();
 var TABS=[['day','Day'],['n7','Next 7 Days'],['n30','Next 30 Days'],['wtd','WTD'],['mtd','MTD']];
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -123,9 +125,10 @@ function srcCard(title,s,tot,cls){
   '<div><div class="k">Guests</div><div style="font-weight:700;margin-top:3px">'+n(s.g)+'</div></div>'+
   '<div><div class="k">Deposited</div><div style="font-weight:700;margin-top:3px">'+m(s.d)+'</div></div></div></div>';
 }
-function blockBody(d,tot){
+function blockBody(d,tot,extra){
  var h='';
  h+='<div class="sec">Totals</div><div class="grid g4">'+tile('Reservations',n(d.t.r))+tile('Guests',n(d.t.g))+tile('Revenue',m(d.t.v),null,'blue')+tile('Deposited',m(d.t.d),Math.round((d.t.d/(d.t.v||1))*100)+'% of revenue','green')+'</div>';
+ h+=(extra||'');
  h+='<div class="sec">Revenue by Source</div><div class="grid g2">'+srcCard('In House / Digital',d.i,d.t,'blue')+srcCard('Host / Promoter',d.h,d.t,'red')+'</div>';
  h+='<div class="sec">Product Breakdown</div><div class="grid g3">';
  pkeys().forEach(function(k){var p=d.p[k]||seg();
@@ -149,7 +152,7 @@ function renderDay(){
   d.z.forEach(function(z){
    var pct=d.t.v?Math.round(z.t.v/d.t.v*100):0;
    h+='<div class="zhead"><h3>'+(z.e.length?z.e.map(esc).join(' / '):'No event listed')+'</h3><span class="chip">'+esc(z.k)+'</span><span class="zshare">'+pct+'% of day revenue</span></div>';
-   h+='<div class="zone">'+blockBody(z)+'</div>';
+   h+='<div class="zone">'+blockBody(z,null,signupSec(s,z.k))+'</div>';
   });
   return h;
  }
