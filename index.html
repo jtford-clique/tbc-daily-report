@@ -74,7 +74,7 @@ var PK=['cab','bun','dbd','cch','chr','stg','pkg','ga'];
 var PLBL={cab:'VIP CABANAS',bun:'BUNGALOWS',dbd:'DAYBEDS',cch:'VIP COUCHES',chr:'LOUNGE CHAIRS',stg:'STAGE TABLES',pkg:'PACKAGES',ga:'GENERAL ADMISSION'};
 var PROW={cab:'VIP Cabanas',bun:'Bungalows',dbd:'Daybeds',cch:'VIP Couches',chr:'Lounge Chairs',stg:'Stage Tables',pkg:'Packages',ga:'General Admission'};
 var PKGFROM="2026-09-05";var PCTX="";function pkeys(){return PK.filter(function(k){return k!=='pkg'||PCTX>=PKGFROM;});}
-var SIGNUP_ZONE="ECZ1";var SIGNUPS={"2026-09-11":238};
+var SIGNUP_ZONE="ECZ1";var SIGNUPS={"2026-09-11":279};
 function signupSec(k){var v=SIGNUPS[k];if(v==null)return '';return '<div class="sec">Class Sign Ups</div><div class="grid g4">'+tile('Sign Ups',n(v))+'</div>';}
 function signupZone(k,zk){return zk===SIGNUP_ZONE?signupSec(k):'';}
 var KEYS=Object.keys(DAYS).sort();
