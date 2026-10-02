@@ -145,7 +145,7 @@ function renderDay(){
  var s=STATE.date,d=DAYS[s],h='';PCTX=s;
  var opts=KEYS.slice().reverse().map(function(k){return '<option value="'+k+'"'+(k===s?' selected':'')+'>'+esc(shortD(k))+(k===TODAY?'  (today)':'')+'</option>';}).join('');
  h+='<div class="head"><h2>'+esc(longD(s))+'</h2><select id="daysel">'+opts+'</select></div>';
- if(!DAYS[TODAY]&&s>TODAY)h+='<div class="closednote">Closed today ('+esc(shortD(TODAY))+') &mdash; showing the next open date.</div>';
+ 
  if(!DAYS[TODAY]&&s<TODAY)h+='<div class="closednote">Closed today ('+esc(shortD(TODAY))+') and no upcoming open dates in this snapshot &mdash; showing the most recent open date.</div>';
  if(!d){h+='<div class="evs">No bookings on this date &mdash; venue closed.</div>';return h;}
  h+='<div class="evs">'+(d.e.length?d.e.map(esc).join(' &nbsp;&bull;&nbsp; '):'No event listed')+(d.zk?' &nbsp;&bull;&nbsp; '+esc(d.zk):'')+'</div>';
