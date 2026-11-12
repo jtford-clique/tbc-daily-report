@@ -80,7 +80,7 @@ var SIGNUP_ZONE="ECZ1";var SIGNUPS={"2026-09-11":279};
 function signupSec(k){var v=SIGNUPS[k];if(v==null)return hospSec(k);return hospSec(k)+'<div class="sec">Class Sign Ups</div><div class="grid g4">'+tile('Sign Ups',n(v))+'</div>';}
 function fpSec(f,always){if(!f&&!always)return '';f=f||{r:0,g:0,v:0,d:0};return '<div class="sec">Field Passes Sold</div><div class="grid g4">'+tile('Field Passes Sold',n(f.g),'passes (guests) on package bookings','blue')+tile('Package Bookings',n(f.r))+tile('Revenue',m(f.v),f.g?m(f.v/f.g)+' avg / pass':null)+tile('Deposited',m(f.d),Math.round((f.d/(f.v||1))*100)+'% of revenue','green')+'</div>';}
 function signupZone(k,zk){return zk===SIGNUP_ZONE?signupSec(k):'';}
-var KEYS=Object.keys(DAYS).sort();
+var OPEN_DOW=[0,6],OPEN_SINCE="2026-11-12";function isOpenDay(k){return k<OPEN_SINCE||OPEN_DOW.indexOf(mkD(k).getDay())>=0;}var OFF={};Object.keys(DAYS).forEach(function(k){if(!isOpenDay(k)){OFF[k]=DAYS[k];delete DAYS[k];}});var KEYS=Object.keys(DAYS).sort();
 var TABS=[['day','Day'],['n7','Next 7 Days'],['n30','Next 30 Days'],['wtd','WTD'],['mtd','MTD']];
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function n(x){return Math.round(x||0).toLocaleString('en-US');}
@@ -104,7 +104,7 @@ function agg(from,to){
  var out={t:seg(),i:seg(),h:seg(),fp:seg(),p:{},dates:[],open:0};
  PK.forEach(function(k){out.p[k]=seg();out.p[k].f=0;});
  for(var s=from;s<=to;s=addD(s,1)){
-  var d=DAYS[s];out.dates.push({date:s,d:d||null});
+  var d=DAYS[s];if(!d&&!isOpenDay(s)){if(OFF[s])out.dates.push({date:s,d:null,off:OFF[s]});continue;}out.dates.push({date:s,d:d||null});
   if(!d)continue; out.open++;
   addSeg(out.t,d.t);addSeg(out.i,d.i);addSeg(out.h,d.h);addSeg(out.fp,d.fp);
   PK.forEach(function(k){addSeg(out.p[k],d.p[k]);});
@@ -148,6 +148,7 @@ function renderDay(){
  var opts=KEYS.slice().reverse().map(function(k){return '<option value="'+k+'"'+(k===s?' selected':'')+'>'+esc(shortD(k))+(k===TODAY?'  (today)':'')+'</option>';}).join('');
  h+='<div class="head"><h2>'+esc(longD(s))+'</h2><select id="daysel">'+opts+'</select></div>';
  
+ if(!DAYS[TODAY]&&s>TODAY)h+='<div class="closednote">Closed today ('+esc(shortD(TODAY))+') &mdash; open Saturdays &amp; Sundays only. Showing the next open day.'+(OFF[TODAY]?' '+n(OFF[TODAY].t.r)+' booking(s) on today&rsquo;s date are not counted.':'')+'</div>';
  if(!DAYS[TODAY]&&s<TODAY)h+='<div class="closednote">Closed today ('+esc(shortD(TODAY))+') and no upcoming open dates in this snapshot &mdash; showing the most recent open date.</div>';
  if(!d){h+='<div class="evs">No bookings on this date &mdash; venue closed.</div>';return h;}
  h+='<div class="evs">'+(d.e.length?d.e.map(esc).join(' &nbsp;&bull;&nbsp; '):'No event listed')+(d.zk?' &nbsp;&bull;&nbsp; '+esc(d.zk):'')+'</div>';
@@ -176,6 +177,7 @@ function dayTable(A){
  A.dates.forEach(function(x){
   var cls=(x.date===TODAY?' istoday':'');
   var lab=esc(shortD(x.date))+(x.date===TODAY?' <span style="color:#61A8C2;font-size:10px;letter-spacing:.1em">TODAY</span>':'');
+  if(x.off){h+='<tr class="closed'+cls+'"><td>'+lab+'</td><td>Closed (weekday) &mdash; not counted</td><td>'+n(x.off.t.r)+'</td><td>'+n(x.off.t.g)+'</td><td>'+m(x.off.t.v)+'</td><td>'+m(x.off.t.d)+'</td></tr>';return;}
   if(!x.d){h+='<tr class="closed'+cls+'"><td>'+lab+'</td><td colspan="5">Closed</td></tr>';return;}
   h+='<tr class="'+cls.trim()+'"><td>'+lab+'</td><td class="ev">'+(x.d.e.length?esc(x.d.e[0])+(x.d.e.length>1?' <span style="color:#8fb4cc">+'+(x.d.e.length-1)+' more</span>':''):'&mdash;')+'</td><td>'+n(x.d.t.r)+'</td><td>'+n(x.d.t.g)+'</td><td>'+m(x.d.t.v)+'</td><td>'+m(x.d.t.d)+'</td></tr>';
   if(splitZones(x.date,x.d)){x.d.z.forEach(function(z){
@@ -198,7 +200,7 @@ function renderPeriod(kind){
 function render(){
  document.getElementById('tabs').innerHTML=TABS.map(function(t){return '<button class="tab'+(STATE.view===t[0]?' on':'')+'" data-v="'+t[0]+'">'+t[1]+'</button>';}).join('');
  Array.prototype.forEach.call(document.querySelectorAll('#tabs .tab'),function(b){b.addEventListener('click',function(){STATE.view=b.getAttribute('data-v');render();window.scrollTo(0,0);});});
- document.getElementById('view').innerHTML=(STATE.view==='day'?renderDay():renderPeriod(STATE.view))+'<div class="note">Source: UrVenue booking details for Tailgate Beach Club. Host / Promoter = bookings created by James Scott, Jose Gonzalez or Bryce Olson; all other bookings are In House / Digital. Bookings with no product type are included in totals but not in the product breakdown. Dates with no bookings are shown as Closed. Days running more than one ecozone are broken out separately below the whole-day figures; ecozone sub-totals sum to the day total. Thursdays are always reported as a single combined day. Field Passes Sold = guests on bookings with global type &ldquo;package&rdquo; in UrVenue (these also appear under their product, e.g. Lounge Chairs).</div>';
+ document.getElementById('view').innerHTML=(STATE.view==='day'?renderDay():renderPeriod(STATE.view))+'<div class="note">Source: UrVenue booking details for Tailgate Beach Club. Host / Promoter = bookings created by James Scott, Jose Gonzalez or Bryce Olson; all other bookings are In House / Digital. Bookings with no product type are included in totals but not in the product breakdown. Open Saturdays &amp; Sundays only from Nov 12, 2026; weekdays are excluded, and any weekday bookings appear greyed out as &ldquo;not counted&rdquo; in the daily detail. Weekend dates with no bookings are shown as Closed. Days running more than one ecozone are broken out separately below the whole-day figures; ecozone sub-totals sum to the day total. Thursdays are always reported as a single combined day. Field Passes Sold = guests on bookings with global type &ldquo;package&rdquo; in UrVenue (these also appear under their product, e.g. Lounge Chairs).</div>';
  var ds=document.getElementById('daysel');
  if(ds)ds.addEventListener('change',function(){STATE.date=ds.value;render();});
 }
